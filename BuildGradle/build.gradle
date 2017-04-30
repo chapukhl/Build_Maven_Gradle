@@ -52,10 +52,6 @@ jar {
     }
 }
 
-findbugsMain{
-
-}
-
 
 uploadArchives {
     repositories {
