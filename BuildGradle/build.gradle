@@ -1,9 +1,9 @@
 group 'com.epam.mp'
-version '1.0-SNAPSHOT'
+version '2.0-SNAPSHOT'
 
 apply plugin: 'java'
 apply plugin: 'maven'
-//apply plugin: 'findbugs'
+apply plugin: 'findbugs'
 apply plugin: "jacoco"
 
 sourceCompatibility = 1.8
@@ -11,6 +11,17 @@ sourceCompatibility = 1.8
 repositories {
     mavenLocal()
     mavenCentral()
+}
+
+findbugs {
+    toolVersion = "3.0.0"
+    sourceSets = [sourceSets.main]
+    ignoreFailures = true
+    reportsDir = file("$project.buildDir/findbugsReports")
+    effort = "max"
+    reportLevel = "high"
+    visitors = ["FindSqlInjection", "SwitchFallthrough"]
+    omitVisitors = ["FindNonShortCircuit"]
 }
 
 dependencies {
@@ -41,11 +52,15 @@ jar {
     }
 }
 
+findbugsMain{
+
+}
+
 
 uploadArchives {
     repositories {
         mavenDeployer {
-            pom.version = "1.0-SNAPSHOT"
+            pom.version = "2.0-SNAPSHOT"
             pom.artifactId = "build-gradle"
             pom.groupId = "com.epam.mp"
             repository(
